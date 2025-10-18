@@ -8,6 +8,7 @@ import {
     UserPen,
     X,
     Briefcase,
+    FileUser,
 } from "lucide-react";
 import image from "../../assets/mobile_bg.jpeg";
 import MobileSkill from "../../apps/MobileSkill";
@@ -27,6 +28,7 @@ const apps = [
     { name: "Skills", icon: <BrainCircuit /> },
     { name: "Profiles", icon: <UserPen /> },
     { name: "Experience", icon: <Briefcase /> },
+    { name: "Resume", icon: <FileUser /> },
 ];
 
 function MobileDesktop() {
@@ -57,7 +59,15 @@ function MobileDesktop() {
                             <div
                                 key={name}
                                 className="flex flex-col items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-110 bg-gray-800/70 rounded-xl"
-                                onClick={() => handleAppClick(name)}
+                                onClick={() => {
+                                    name !== "Resume"
+                                        ? handleAppClick(name)
+                                        : window.open(
+                                              "https://drive.google.com/file/d/1vTlD3Llfdw7CWrz-U5zwTJ0MHmGdVjpx/view?usp=sharing",
+                                              "_blank",
+                                              "noopener,noreferrer"
+                                          );
+                                }}
                             >
                                 <div className="text-white drop-shadow-md p-6">
                                     {Icon}

@@ -10,6 +10,7 @@ import {
     BrainCircuit,
     UserPen,
     Briefcase,
+    FileUser,
 } from "lucide-react";
 import TaskBar from "../components/Desktop/TaskBar";
 import AppWindow from "../components/Desktop/AppWindow"; // new window component
@@ -41,6 +42,7 @@ function DesktopScreen() {
         Skills: <BrainCircuit />,
         Profiles: <UserPen />,
         Experience: <Briefcase />,
+        Resume: <FileUser />,
     };
 
     const openApp = (name) => {
@@ -116,6 +118,17 @@ function DesktopScreen() {
                         icon={<Briefcase />}
                         label="Experience"
                         onClick={() => openApp("Experience")}
+                    />
+                    <AppIcon
+                        icon={<FileUser />}
+                        label="Resume"
+                        onClick={() => {
+                            window.open(
+                                "https://drive.google.com/file/d/1vTlD3Llfdw7CWrz-U5zwTJ0MHmGdVjpx/view?usp=sharing",
+                                "_blank",
+                                "noopener,noreferrer"
+                            );
+                        }}
                     />
                 </div>
 

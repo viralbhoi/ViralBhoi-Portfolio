@@ -15,14 +15,27 @@ export default function TerminalApp() {
             case "":
                 return;
             case "help":
-                output = "Available commands:\nhelp, about, date, clear";
-                break;
-            case "about":
                 output =
-                    "This terminal is part of Viral’s portfolio — built with React, Tailwind & passion 💻";
+                    "Available commands:\nhelp, whoami, projects, education, social, contact, clear";
                 break;
-            case "date":
-                output = new Date().toString();
+            case "whoami":
+                output =
+                    "Viral Bhoi — Software Developer | Turning ideas into interactive systems.\nExplore my work using the ‘projects’ command or open Projects App.";
+                break;
+            case "projects":
+                output = "Please open Project app from desktop,";
+                break;
+            case "education":
+                output =
+                    "Birla Vishvakarma Mahavidyalaya\n2023 - 2027\nCPI:8.37/10\n\nC.V.M. H.S.E.C. (R.P.T.P. School)\n12th Board\nPercentile: 99.21/100.00";
+                break;
+            case "social":
+                output =
+                    "LinkedIn - viralbhoi\nX - coder211005\nYoutube - @viral_bhoi\nLeetcode - viralbhoi\nGithub - viralbhoi\nCodeforces - viralbhoi\nCodechef - viral_bhoi\n\nClick on Profiles app for links";
+                break;
+            case "contact":
+                output =
+                    "Mail - 72viralbhoi@gmail.com \nYou can contact via Mail app on desktop !";
                 break;
             case "clear":
                 setLines([]);
