@@ -1,17 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Power } from "lucide-react";
 import "./BootScreen.css";
 
 export default function BootScreenComp({ onBootComplete }) {
     const [isBooting, setIsBooting] = useState(false);
+    const [visibleLines, setVisibleLines] = useState([]);
+
+    const bootLines = [
+        "Booting up the setup...",
+        "Loading user environment...",
+        "Initializing desktop services...",
+        "Checking system configurations...",
+        "Connecting to local host...",
+        "Launching user interface...",
+        "All systems operational.",
+        "Welcome, guest.....",
+    ];
 
     const handlePowerOn = () => {
         setIsBooting(true);
 
+        bootLines.forEach((line, index) => {
+            setTimeout(() => {
+                setVisibleLines((prev) => [...prev, line]);
+            }, index * 400);
+        });
+
         setTimeout(() => {
             onBootComplete();
-        }, 3000);
+        }, bootLines.length * 400 + 1000);
     };
+
+    useEffect(() => {
+        if (!isBooting) setVisibleLines([]);
+    }, [isBooting]);
 
     return (
         <div
@@ -21,8 +43,9 @@ export default function BootScreenComp({ onBootComplete }) {
         >
             {isBooting ? (
                 <div className="booting-text">
-                    <p>Booting up the setup</p>
-                    <p>Loading user environment...</p>
+                    {visibleLines.map((line, index) => (
+                        <p key={index}>{line}</p>
+                    ))}
                 </div>
             ) : (
                 <div className="power-section">
