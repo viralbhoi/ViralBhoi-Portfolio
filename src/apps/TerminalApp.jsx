@@ -20,7 +20,7 @@ export default function TerminalApp() {
                 break;
             case "whoami":
                 output =
-                    "Viral Bhoi — Software Developer | Turning ideas into interactive systems.\nExplore my work using the ‘projects’ command or open Projects App.";
+                    "Viral Bhoi — Computer Engineering Student | Building what I imagine, debugging what I build.\nRun ‘projects’ to explore my work or open the Projects app.";
                 break;
             case "projects":
                 output = "Please open Project app from desktop,";
