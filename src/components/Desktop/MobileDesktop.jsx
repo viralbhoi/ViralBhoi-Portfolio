@@ -63,7 +63,7 @@ function MobileDesktop() {
                                     name !== "Resume"
                                         ? handleAppClick(name)
                                         : window.open(
-                                              "https://drive.google.com/file/d/1L2S3Ig8cnsQDgiT_cGAQYRDANch2MyMt/view?usp=sharing",
+                                              "https://drive.google.com/file/d/19CyPSjWQfq-tepRLU4j3oKPPC9QR5d4c/view?usp=sharing",
                                               "_blank",
                                               "noopener,noreferrer"
                                           );
