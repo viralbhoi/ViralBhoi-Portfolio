@@ -1,156 +1,159 @@
 import React, { useState } from "react";
 import {
-    ChevronDown,
     ChevronLeft,
     ChevronRight,
-    LayoutList,
-    House,
-    Menu,
-    Folder,
+    LayoutGrid,
+    List,
+    Search,
+    Folder as FolderIcon,
+    FileCode2,
     HardDrive,
-    Trash2,
-    Code2,
     Database,
+    Code2,
+    MonitorSmartphone,
+    BrainCircuit,
 } from "lucide-react";
+import { folderData } from "../data/projectsData";
 
 function ProjectApp() {
-    const [activeTab, setActiveTab] = useState("Home");
+    const [activeTab, setActiveTab] = useState("Fullstack");
+    const [searchQuery, setSearchQuery] = useState("");
 
-    const folderData = {
-        Home: [],
-        Frontend: [
-            {
-                name: "TravelMate",
-                link: "https://github.com/viralbhoi/TravelMate",
-            },
-            {
-                name: "Zerodha Clone",
-                link: "https://github.com/viralbhoi/Zerodha-Clone",
-            },
-            {
-                name: "Landing Page Clone",
-                link: "https://github.com/viralbhoi/sidcup-familygolf",
-            },
-        ],
-        Fullstack: [
-            {
-                name: "Local finder",
-                link: "https://github.com/viralbhoi/LocalFinder/tree/main/CurrentVersion",
-            },
-        ],
-        "C++": [
-            {
-                name: "Business Management System",
-                link: "https://github.com/viralbhoi/Business-Management-System",
-            },
-            {
-                name: "Tower of Hanoi visualizer",
-                link: "https://github.com/viralbhoi/TowerOfHanoiVisualizer",
-            },
-        ],
-        C: [
-            {
-                name: "ParcelTrackingSystem",
-                link: "https://github.com/viralbhoi/ParcelTrackingSystem",
-            },
-        ],
-        DBMS: [
-            {
-                name: "Military Personnel Management System",
-                link: "https://github.com/viralbhoi/Military_Personnel_Management_System",
-            },
-        ],
-        Trash: [],
+    const tabIcons = {
+        "Machine Learning": <BrainCircuit size={16} />,
+        Fullstack: <HardDrive size={16} />,
+        Frontend: <MonitorSmartphone size={16} />,
+        DBMS: <Database size={16} />,
+        "C++": <Code2 size={16} />,
+        C: <Code2 size={16} />,
     };
 
-    const tabs = [
-        { name: "Home", icon: <House size={18} /> },
-        { name: "Frontend", icon: <Folder size={18} /> },
-        { name: "Fullstack", icon: <HardDrive size={18} /> },
-        { name: "C++", icon: <Code2 size={18} /> },
-        { name: "C", icon: <Code2 size={18} /> },
-        { name: "DBMS", icon: <Database size={18} /> },
-        { name: "Trash", icon: <Trash2 size={18} /> },
-    ];
+    // Filter out "Home" from the sidebar since Finder uses the sidebar itself for navigation
+    const sidebarTabs = Object.keys(folderData).filter((tab) => tab !== "Home");
 
     const openGitHub = (link) => {
         window.open(link, "_blank", "noopener,noreferrer");
     };
 
+    const currentItems = folderData[activeTab] || [];
+
     return (
-        <div className="flex flex-col w-full rounded-sm h-full bg-gray-200">
-            <div className="flex items-center justify-between bg-gray-400 text-black font-semibold p-1 border-b border-black">
-                <div className="flex items-center gap-2">
-                    <span className="p-2 rounded-md border border-black mx-2 cursor-pointer hover:bg-gray-300">
-                        <ChevronLeft className="inline" />
-                    </span>
-                    <span className="p-2 rounded-md border border-black mx-2 cursor-pointer hover:bg-gray-300">
-                        <ChevronRight className="inline" />
-                    </span>
+        <div className="flex w-full h-full text-gray-200 font-sans selection:bg-blue-500/30 overflow-hidden bg-[#1e1e1e]">
+            {/* Finder Sidebar */}
+            <div className="w-48 bg-[#282829]/90 border-r border-black/50 flex flex-col pt-4">
+                <div className="px-4 text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                    Favorites
                 </div>
-
-                <span className="flex items-center p-2 rounded-md border border-black mx-2 cursor-pointer hover:bg-gray-300">
-                    <House className="inline mr-2" />
-                    <p className="inline px-1">{activeTab}</p>
-                    <ChevronDown size={16} className="inline ml-2" />
-                </span>
-
-                <div className="flex items-center gap-2 mx-2">
-                    <span className="p-2 rounded-md border border-black cursor-pointer hover:bg-gray-300">
-                        <LayoutList size={16} />
-                    </span>
-                    <span className="p-2 rounded-md border border-black cursor-pointer hover:bg-gray-300">
-                        <ChevronDown size={16} />
-                    </span>
-                    <span className="p-2 rounded-md border border-black cursor-pointer hover:bg-gray-300">
-                        <Menu size={16} />
-                    </span>
-                </div>
-            </div>
-
-            <div className="flex bg-gray-100 text-black font-mono min-h-[85vh]">
-                <div className="w-52 bg-gray-50 border-r border-gray-400 py-4 px-2 flex flex-col gap-1">
-                    {tabs.map((tab) => (
+                <div className="flex flex-col px-2 gap-0.5">
+                    {sidebarTabs.map((tab) => (
                         <div
-                            key={tab.name}
-                            className={`flex items-center gap-3 p-2 rounded-md cursor-pointer text-sm font-semibold ${
-                                activeTab === tab.name
-                                    ? "bg-gray-400 text-black"
-                                    : "hover:bg-gray-300 text-gray-700"
+                            key={tab}
+                            className={`flex items-center gap-2 px-2 py-1.5 rounded-md cursor-pointer transition-colors ${
+                                activeTab === tab
+                                    ? "bg-blue-500 text-white"
+                                    : "text-gray-300 hover:bg-white/10"
                             }`}
-                            onClick={() => setActiveTab(tab.name)}
+                            onClick={() => setActiveTab(tab)}
                         >
-                            {tab.icon}
-                            {tab.name}
+                            {/* Blue icon if not active, white if active */}
+                            <div
+                                className={
+                                    activeTab === tab
+                                        ? "text-white"
+                                        : "text-blue-400"
+                                }
+                            >
+                                {tabIcons[tab] || <FolderIcon size={16} />}
+                            </div>
+                            <span className="text-[13px] font-medium tracking-wide">
+                                {tab}
+                            </span>
                         </div>
                     ))}
                 </div>
-                <div className="flex-1 p-4">
-                    <h2 className="text-xl font-bold mb-4">{activeTab}</h2>
+            </div>
 
-                    {folderData[activeTab] &&
-                    folderData[activeTab].length > 0 ? (
-                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6">
-                            {folderData[activeTab].map((project, index) => (
+            {/* Main Finder Area */}
+            <div className="flex-1 flex flex-col min-w-0 bg-[#1e1e1e]">
+                {/* Finder Toolbar */}
+                <div className="h-14 bg-[#2b2b2d] flex items-center justify-between px-4 border-b border-black/50 flex-shrink-0">
+                    {/* Left: Navigation */}
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1 text-gray-400">
+                            <ChevronLeft
+                                size={24}
+                                className="hover:text-gray-200 cursor-pointer transition-colors"
+                            />
+                            <ChevronRight
+                                size={24}
+                                className="opacity-50 cursor-not-allowed"
+                            />
+                        </div>
+                        <h2 className="text-[15px] font-semibold tracking-wide text-white ml-2">
+                            {activeTab}
+                        </h2>
+                    </div>
+
+                    {/* Right: View Toggles & Search */}
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center bg-[#1c1c1e] rounded-md border border-white/10 p-0.5">
+                            <div className="p-1 bg-[#4a4a4d] rounded shadow-sm text-gray-100 cursor-pointer">
+                                <LayoutGrid size={16} />
+                            </div>
+                            <div className="p-1 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors">
+                                <List size={16} />
+                            </div>
+                        </div>
+
+                        {/* macOS Search Input */}
+                        <div className="flex items-center bg-[#1c1c1e] border border-white/10 rounded-md px-2 py-1 w-48">
+                            <Search size={14} className="text-gray-400 mr-2" />
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="bg-transparent border-none outline-none text-[13px] text-gray-200 w-full placeholder-gray-500"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Finder Content Grid */}
+                <div className="flex-1 p-6 overflow-y-auto">
+                    {currentItems.length > 0 ? (
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-4 gap-y-8">
+                            {currentItems.map((project, index) => (
                                 <div
                                     key={index}
-                                    className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
+                                    className="flex flex-col items-center cursor-pointer group px-2"
                                     onClick={() => openGitHub(project.link)}
+                                    title={project.subtitle || project.name}
                                 >
-                                    <Folder
-                                        size={56}
-                                        className="text-gray-700 hover:text-gray-900 transition-colors"
-                                    />
-                                    <p className="text-xs mt-2 text-center w-20 truncate text-ellipsis">
+                                    {/* Icon Container with macOS hover effect */}
+                                    <div className="p-3 rounded-lg group-hover:bg-white/10 transition-colors border border-transparent group-hover:border-white/5">
+                                        {/* Using FileCode2 to represent a repository/project file */}
+                                        <FileCode2
+                                            size={54}
+                                            strokeWidth={1.2}
+                                            className="text-blue-400 fill-blue-500/20 drop-shadow-md"
+                                        />
+                                    </div>
+
+                                    {/* Filename */}
+                                    <span className="text-[13px] text-gray-200 mt-1 text-center leading-tight line-clamp-2 group-hover:bg-blue-500 group-hover:text-white rounded px-1.5 transition-colors">
                                         {project.name}
-                                    </p>
+                                    </span>
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <p className="text-gray-500 italic">
-                            No projects in this folder
-                        </p>
+                        <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                            <FolderIcon size={48} className="mb-4 opacity-20" />
+                            <p className="text-sm font-medium">
+                                This folder is empty.
+                            </p>
+                        </div>
                     )}
                 </div>
             </div>

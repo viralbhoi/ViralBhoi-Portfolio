@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Rnd } from "react-rnd";
-import { Minus, Square, X } from "lucide-react";
 import { useAppContext } from "../../context/AppContext";
 
 export default function AppWindow({ children, title = "App Window", onClose }) {
     const [position, setPosition] = useState({ x: 100, y: 100 });
     const [size, setSize] = useState({ width: 600, height: 480 });
+
     const [fullSize, setFullSize] = useState({
-        width: window.innerWidth - 56,
-        height: window.innerHeight,
+        width: window.innerWidth,
+        height: window.innerHeight - 36, // Subtracting Top Bar height
     });
 
     const {
@@ -23,8 +23,8 @@ export default function AppWindow({ children, title = "App Window", onClose }) {
     useEffect(() => {
         const handleResize = () => {
             setFullSize({
-                width: window.innerWidth - 56,
-                height: window.innerHeight,
+                width: window.innerWidth,
+                height: window.innerHeight - 36,
             });
         };
         window.addEventListener("resize", handleResize);
@@ -37,14 +37,16 @@ export default function AppWindow({ children, title = "App Window", onClose }) {
 
     return (
         <Rnd
-            className={`bg-gray-900 border border-gray-700 rounded-lg shadow-lg text-white overflow-hidden transition-all duration-75 box-border`}
+            // Added glassy background, heavy shadow, and a subtle white border
+            className={`bg-[#1c1c1e]/80 backdrop-blur-2xl border border-white/20 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] text-white overflow-hidden transition-all box-border`}
             bounds="window"
             size={
                 maximized
                     ? { width: fullSize.width, height: fullSize.height }
                     : size
             }
-            position={maximized ? { x: 56, y: 0 } : position}
+            // If maximized, start right below the top bar (y: 36 instead of 0)
+            position={maximized ? { x: 0, y: 36 } : position}
             onDragStop={(e, d) => setPosition({ x: d.x, y: d.y })}
             onResizeStop={(e, direction, ref, delta, pos) => {
                 setSize({ width: ref.offsetWidth, height: ref.offsetHeight });
@@ -57,10 +59,16 @@ export default function AppWindow({ children, title = "App Window", onClose }) {
             }}
             onMouseDown={() => handleWindowClick(title)}
         >
-            {/* Title Bar */}
-            <div className="flex justify-between items-center bg-gray-800 px-3 py-1 cursor-move absolute top-0 left-0 right-0 z-10">
-                <span className="font-mono text-sm">{title}</span>
-                <div className="flex gap-2">
+            {/* macOS Title Bar */}
+            <div className="flex justify-center items-center px-4 h-11 cursor-move absolute top-0 left-0 right-0 z-10 border-b border-white/10 bg-white/5">
+                {/* Traffic Light Window Controls - Positioned Absolute Left */}
+                <div className="flex gap-[8px] absolute left-4">
+                    {/* Close - Red */}
+                    <button
+                        onClick={onClose}
+                        className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e] hover:brightness-110 active:brightness-90 transition-all"
+                    />
+                    {/* Minimize - Yellow */}
                     <button
                         onClick={() =>
                             setIsMinimized((prev) => ({
@@ -68,10 +76,9 @@ export default function AppWindow({ children, title = "App Window", onClose }) {
                                 [title]: true,
                             }))
                         }
-                        className="hover:text-yellow-400"
-                    >
-                        <Minus size={14} />
-                    </button>
+                        className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123] hover:brightness-110 active:brightness-90 transition-all"
+                    />
+                    {/* Maximize - Green */}
                     <button
                         onClick={() =>
                             setIsMaximized((prev) => ({
@@ -79,18 +86,18 @@ export default function AppWindow({ children, title = "App Window", onClose }) {
                                 [title]: !prev[title],
                             }))
                         }
-                        className="hover:text-green-400"
-                    >
-                        <Square size={14} />
-                    </button>
-                    <button onClick={onClose} className="hover:text-red-400">
-                        <X size={14} />
-                    </button>
+                        className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29] hover:brightness-110 active:brightness-90 transition-all"
+                    />
                 </div>
+
+                {/* Centered App Title */}
+                <span className="font-semibold text-[13px] tracking-wide text-gray-300 select-none">
+                    {title}
+                </span>
             </div>
 
-            {/* App Content */}
-            <div className="absolute top-7 bottom-0 left-0 right-0 p-1 bg-gray-900 overflow-auto box-border">
+            {/* App Content Area */}
+            <div className="absolute top-11 bottom-0 left-0 right-0 bg-[#1e1e1e]/60 overflow-auto box-border rounded-b-xl">
                 {children}
             </div>
         </Rnd>

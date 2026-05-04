@@ -1,148 +1,129 @@
 import React from "react";
-import {
-    Circle,
-    BookOpenText,
-    ChevronDown,
-    Menu,
-    SquareArrowOutUpRight,
-} from "lucide-react";
+import { FileJson, X, Menu, ChevronRight } from "lucide-react";
 
 function SkillApp() {
-    const link1 =
-        "https://www.codechef.com/rankings/START169D?itemsPerPage=100&order=asc&page=1&search=viral_bhoi&sortBy=rank";
-    const link2 =
-        "https://www.codechef.com/rankings/START176C?itemsPerPage=100&order=asc&page=1&search=viral_bhoi&sortBy=rank";
-    const link3 =
-        "https://www.codechef.com/rankings/START171C?itemsPerPage=100&order=asc&page=1&search=viral_bhoi&sortBy=rank";
+    // Formatting the skills as a JSON object for the code editor aesthetic
+    const codeLines = [
+        `{`,
+        `  "title": "Technical Skills & Achievements",`,
+        `  "languages": [`,
+        `    "C++", "Python", "Java", "C", "JavaScript"`,
+        `  ],`,
+        `  "web_and_ml_stack": [`,
+        `    "React", "Node.js", "Express.js", "TailwindCSS",`,
+        `    "FastAPI", "MobileNetV2"`,
+        `  ],`,
+        `  "databases": [`,
+        `    "PostgreSQL", "MongoDB"`,
+        `  ],`,
+        `  "competitive_programming": {`,
+        `    "ICPC": "Asia West Amritapuri Regionalist",`,
+        `    "LeetCode": "1905 (Knight, Top 4.23%)",`,
+        `    "CodeChef": "1625 (3-Star max)",`,
+        `    "CodeForces": "1220"`,
+        `  },`,
+        `  "examinations": {`,
+        `    "GATE_2026_CS": "AIR 5075",`,
+        `    "GATE_2026_DA": "AIR 9596"`,
+        `  }`,
+        `}`,
+    ];
+
+    // Simple syntax highlighting logic
+    const renderHighlightedLine = (line) => {
+        // Highlight keys (strings with colons) in a light blue
+        if (line.includes('":')) {
+            const parts = line.split('":');
+            return (
+                <>
+                    <span className="text-[#9cdcfe]">{parts[0]}"</span>:
+                    <span className="text-[#ce9178]">{parts[1]}</span>
+                </>
+            );
+        }
+        // Highlight values/arrays in orange/string color
+        if (line.includes('"')) {
+            return <span className="text-[#ce9178]">{line}</span>;
+        }
+        // Brackets and punctuation stay default color
+        return <span className="text-[#d4d4d4]">{line}</span>;
+    };
 
     return (
-        <div className="flex flex-col justify-between m-0 p-0 w-full rounded-sm">
-            <div className="flex items-center justify-between bg-gray-400 gap-4 box-border p-1 border-b-3 border-black text-black font-semibold">
-                <div className="w-auto">
-                    <span className="p-2 rounded-lg mx-4 border-1 border-black w-20">
-                        open <ChevronDown size={16} className="inline" />
-                    </span>
-
-                    <span className="p-2 rounded-lg mx-4 border-1 border-black">
-                        <BookOpenText size={16} className="inline" />
-                    </span>
+        <div className="flex flex-col w-full h-full bg-[#1e1e1e] font-sans text-gray-300 selection:bg-blue-500/30 overflow-hidden">
+            {/* Editor Toolbar / Tab Bar */}
+            <div className="flex items-center bg-[#252526] h-10 border-b border-black flex-shrink-0">
+                {/* Active Tab */}
+                <div className="flex items-center gap-2 bg-[#1e1e1e] h-full px-4 border-t-2 border-blue-500 min-w-[150px] cursor-pointer">
+                    <FileJson size={14} className="text-yellow-400" />
+                    <span className="text-[13px] text-white">skills.json</span>
+                    <X
+                        size={14}
+                        className="ml-auto text-gray-400 hover:text-white transition-colors"
+                    />
                 </div>
-
-                <span className="w-auto">Skills.txt</span>
-
-                <div className="w-auto flex items-center justify-between">
-                    <span className="p-2 rounded-lg mx-4 border-1 border-black w-20">
-                        Save <ChevronDown size={16} className="inline" />
-                    </span>
-
-                    <span className="p-2 rounded-lg mx-4 border-1 border-black">
-                        <Menu size={16} />
-                    </span>
+                {/* Inactive Tab area */}
+                <div className="flex-1 h-full bg-[#2d2d2d] flex items-center justify-end px-4">
+                    <Menu
+                        size={16}
+                        className="text-gray-400 cursor-pointer hover:text-white transition-colors"
+                    />
                 </div>
             </div>
 
-            <div className="bg-gray-100 text-black font-mono min-h-screen">
-                <ol start={1} className="ml-2">
-                    <li>Programming Languages: </li>
-                    <li>
-                        <div>
-                            <ol start={1} className="list-decimal ml-6">
-                                <li>C++,</li>
-                                <li>Java,</li>
-                                <li>Python,</li>
-                                <li>C,</li>
-                                <li>JavaScript,</li>
-                            </ol>
-                        </div>
-                    </li>
-                    <li>
-                        <div style={{ height: "1rem" }} />
-                    </li>
-                    <li>Web Stack: </li>
-                    <li>
-                        <div>
-                            <ol start={1} className="list-decimal ml-6">
-                                <li>React,</li>
-                                <li>TailwindCSS,</li>
-                                <li>ExpressJS,</li>
-                                <li>NodeJS,</li>
-                                <li>HTML,</li>
-                                <li>CSS,</li>
-                            </ol>
-                        </div>
-                    </li>
-                    <li>
-                        <div style={{ height: "1rem" }} />
-                    </li>
-                    <li>Databases: </li>
-                    <li>
-                        <div>
-                            <ol start={1} className="list-decimal ml-6">
-                                <li>PostgreSQL,</li>
-                                <li>MongoDB,</li>
-                            </ol>
-                        </div>
-                    </li>
-                    <li>
-                        <div style={{ height: "1rem" }} />
-                    </li>
-                    <li>Competitive Programming Skills: </li>
-                    <li>
-                        <div>
-                            <ol start={1} className="list-decimal ml-6">
-                                <li>Codechef : 1625 (max),</li>
-                                <li>LeetCode : 1634 (max),</li>
-                                <li>CodeForces : 1080(max),</li>
-                                <li>LeetCode: 550+ question solved,</li>
-                                <li>Codeforces : 500+ questions solved,</li>
-                                <li>
-                                    <p>
-                                        Ranks : Global rank 107 (
-                                        <a
-                                            href={link1}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className=""
-                                        >
-                                            Open
-                                            <SquareArrowOutUpRight
-                                                size={16}
-                                                className="inline text-blue-700"
-                                            />
-                                        </a>
-                                        ), Global rank 390 (
-                                        <a
-                                            href={link2}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline text-blue-700"
-                                        >
-                                            Open
-                                            <SquareArrowOutUpRight
-                                                size={16}
-                                                className="inline text-blue-700"
-                                            />
-                                        </a>
-                                        ), Global rank 986 (
-                                        <a
-                                            href={link3}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline text-blue-700"
-                                        >
-                                            Open
-                                            <SquareArrowOutUpRight
-                                                size={16}
-                                                className="inline text-blue-700"
-                                            />
-                                        </a>
-                                        ) in Codechef.
-                                    </p>
-                                </li>
-                            </ol>
-                        </div>
-                    </li>
-                </ol>
+            {/* Breadcrumbs */}
+            <div className="flex items-center gap-1 px-4 h-6 text-[12px] text-gray-500 bg-[#1e1e1e] flex-shrink-0">
+                <span className="hover:text-gray-300 cursor-pointer">
+                    portfolio
+                </span>
+                <ChevronRight size={14} />
+                <span className="hover:text-gray-300 cursor-pointer">src</span>
+                <ChevronRight size={14} />
+                <span className="hover:text-gray-300 cursor-pointer">data</span>
+                <ChevronRight size={14} />
+                <span className="text-gray-300">skills.json</span>
+            </div>
+
+            {/* Code Editor Area */}
+            <div className="flex-1 overflow-auto bg-[#1e1e1e] pt-2 pb-6">
+                <div className="flex font-mono text-[14px] leading-relaxed">
+                    {/* Line Numbers */}
+                    <div className="flex flex-col text-right px-4 text-[#858585] select-none border-r border-white/5">
+                        {codeLines.map((_, index) => (
+                            <div key={index}>{index + 1}</div>
+                        ))}
+                    </div>
+
+                    {/* Code Content */}
+                    <div className="flex flex-col px-4 whitespace-pre">
+                        {codeLines.map((line, index) => (
+                            <div key={index}>{renderHighlightedLine(line)}</div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Editor Status Bar */}
+            <div className="flex items-center justify-between h-6 bg-[#007acc] text-white text-[11px] px-3 flex-shrink-0">
+                <div className="flex items-center gap-4">
+                    <span className="cursor-pointer hover:bg-white/20 px-1 rounded">
+                        main*
+                    </span>
+                    <span className="cursor-pointer hover:bg-white/20 px-1 rounded">
+                        Ln 14, Col 37
+                    </span>
+                </div>
+                <div className="flex items-center gap-4">
+                    <span className="cursor-pointer hover:bg-white/20 px-1 rounded">
+                        UTF-8
+                    </span>
+                    <span className="cursor-pointer hover:bg-white/20 px-1 rounded">
+                        JSON
+                    </span>
+                    <span className="cursor-pointer hover:bg-white/20 px-1 rounded">
+                        Prettier
+                    </span>
+                </div>
             </div>
         </div>
     );

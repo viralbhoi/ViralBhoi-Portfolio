@@ -1,18 +1,29 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 function AppIcon({ icon, label, onClick }) {
     return (
-        <div
-            className="flex flex-col items-start w-[5rem] justify-center cursor-pointer hover:scale-105 transition-transform"
+        <motion.div
             onClick={onClick}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex flex-col items-center justify-center gap-1 w-24 cursor-pointer group"
         >
-            <div className="flex flex-col items-center justify-center">
-                <div className="p-4 w-[3.5rem] bg-gray-700 rounded-xl hover:bg-gray-600/70 text-white">
-                    {icon}
-                </div>
-                <p className="text-white text-sm mt-2 text-center">{label}</p>
+            {/* The Icon: Floating directly on the background with a drop shadow */}
+            <div className="text-white drop-shadow-lg transition-colors group-hover:text-blue-400 flex items-center justify-center h-14 w-14">
+                {/* We use cloneElement to force a consistent, slightly larger size now that the box is gone */}
+                {React.cloneElement(icon, { size: 48, strokeWidth: 1.2 })}
             </div>
-        </div>
+
+            {/* The Label: Needs a text-shadow so it's readable on any wallpaper */}
+            <span
+                className="text-white text-[13px] font-medium tracking-wide text-center px-2 py-0.5 rounded-[4px] group-hover:bg-blue-500/60"
+                style={{ textShadow: "0px 1px 3px rgba(0,0,0,0.9)" }}
+            >
+                {label}
+            </span>
+        </motion.div>
     );
 }
+
 export default AppIcon;

@@ -1,141 +1,127 @@
 import React, { useState } from "react";
 import {
-    House,
-    Folder,
-    HardDrive,
-    Trash2,
-    Code2,
-    Database,
-    Search
+    Search,
+    ChevronRight,
+    ChevronLeft,
+    Folder as FolderIcon,
+    FileCode2,
 } from "lucide-react";
+import { folderData } from "../data/projectsData"; // Adjust the import path as needed
 
 function MobileProjects() {
     const [activeTab, setActiveTab] = useState("Home");
-
-    const folderData = {
-        Home: [
-            {
-                name: "Frontend",
-            },
-            {
-                name: "Fullstack",
-            },
-            {
-                name: "DBMS",
-            },
-            {
-                name: "C++",
-            },
-            {
-                name: "C",
-            },
-        ],
-        Frontend: [
-            {
-                name: "TravelMate",
-                link: "https://github.com/viralbhoi/TravelMate",
-            },
-            {
-                name: "Zerodha Clone",
-                link: "https://github.com/viralbhoi/Zerodha-Clone",
-            },
-            {
-                name: "Landing Page Clone",
-                link: "https://github.com/viralbhoi/sidcup-familygolf",
-            },
-        ],
-        Fullstack: [
-            {
-                name: "Local finder",
-                link: "https://github.com/viralbhoi/LocalFinder/tree/main/CurrentVersion",
-            },
-        ],
-        "C++": [
-            {
-                name: "Business Management System",
-                link: "https://github.com/viralbhoi/Business-Management-System",
-            },
-            {
-                name: "Tower of Hanoi visualizer",
-                link: "https://github.com/viralbhoi/TowerOfHanoiVisualizer",
-            },
-        ],
-        C: [
-            {
-                name: "ParcelTrackingSystem",
-                link: "https://github.com/viralbhoi/ParcelTrackingSystem",
-            },
-        ],
-        DBMS: [
-            {
-                name: "Military Personnel Management System",
-                link: "https://github.com/viralbhoi/Military_Personnel_Management_System",
-            },
-        ],
-    };
-
-    const tabs = [
-        { name: "Home", icon: <House size={18} /> },
-        { name: "Frontend", icon: <Folder size={18} /> },
-        { name: "Fullstack", icon: <HardDrive size={18} /> },
-        { name: "C++", icon: <Code2 size={18} /> },
-        { name: "C", icon: <Code2 size={18} /> },
-        { name: "DBMS", icon: <Database size={18} /> },
-        { name: "Trash", icon: <Trash2 size={18} /> },
-    ];
+    const [searchQuery, setSearchQuery] = useState("");
 
     const openGitHub = (link) => {
         window.open(link, "_blank", "noopener,noreferrer");
     };
+
+    const currentItems = folderData[activeTab] || [];
+
     return (
-        <div className="h-screen w-screen bg-white">
-            <div className="flex bg-gray-100 text-black font-mono min-h-[85vh]">
-                <div className="flex-1 p-4">
-                    <h2 className="text-3xl font-bold mb-4">{activeTab}</h2>
+        <div className="h-screen w-screen bg-black text-white font-sans overflow-hidden flex flex-col">
+            {/* iOS Top Navigation Bar */}
+            <div className="flex items-center justify-between px-4 pt-12 pb-2 bg-black z-10">
+                {activeTab !== "Home" ? (
+                    <button
+                        onClick={() => setActiveTab("Home")}
+                        className="flex items-center text-blue-500 text-lg hover:opacity-80 transition-opacity"
+                    >
+                        <ChevronLeft size={24} className="-ml-1" />
+                        <span>Browse</span>
+                    </button>
+                ) : (
+                    <div className="w-20"></div> 
+                )}
+                <div className="w-20"></div> 
+            </div>
 
-                    <div className="m-1 border-1 border-black/50 text-gray-600 p-1 rounded-full px-3 my-5 flex justify-between items-center">
-                        <p>Search</p>
-                        <Search size={20} />
-                    </div>
+            {/* iOS Large Title */}
+            <div className="px-5 pb-2">
+                <h1 className="text-4xl font-bold tracking-tight">
+                    {activeTab === "Home" ? "Browse" : activeTab}
+                </h1>
+            </div>
 
-                    {folderData[activeTab] &&
-                    folderData[activeTab].length > 0 ? (
-                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6">
-                            {folderData[activeTab].map((project, index) => (
-                                <div
-                                    key={index}
-                                    className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
-                                    onClick={() =>
-                                        activeTab === "Home"
-                                            ? setActiveTab(project.name)
-                                            : openGitHub(project.link)
-                                    }
-                                >
-                                    <Folder size={56} className="text-black" />
-                                    <p className="text-xs mt-2 text-center w-20 truncate text-ellipsis">
-                                        {project.name}
-                                    </p>
-                                </div>
-                            ))}
-
-                            {activeTab !== "Home" && (
-                                <div
-                                    className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
-                                    onClick={() => setActiveTab("Home")}
-                                >
-                                    <House size={56} className="text-black" />
-                                    <p className="text-xs mt-2 text-center w-20 truncate text-ellipsis">
-                                        Back
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <p className="text-gray-500 italic">
-                            No projects in this folder
-                        </p>
-                    )}
+            {/* iOS Search Bar */}
+            <div className="px-4 mb-4">
+                <div className="flex items-center bg-[#1c1c1e] text-gray-400 px-3 py-2 rounded-xl">
+                    <Search size={20} className="mr-2" />
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="bg-transparent border-none outline-none text-white w-full text-[17px] placeholder-gray-500"
+                    />
                 </div>
+            </div>
+
+            {/* iOS Grouped List View */}
+            <div className="flex-1 overflow-y-auto px-4 pb-10">
+                {currentItems.length > 0 ? (
+                    <div className="bg-[#1c1c1e] rounded-xl overflow-hidden">
+                        {currentItems.map((item, index) => (
+                            <div
+                                key={index}
+                                onClick={() =>
+                                    item.type === "folder"
+                                        ? setActiveTab(item.name)
+                                        : openGitHub(item.link)
+                                }
+                                className={`flex items-center justify-between p-3 active:bg-[#2c2c2e] transition-colors cursor-pointer ${
+                                    index !== currentItems.length - 1
+                                        ? "border-b border-gray-800 ml-12"
+                                        : "ml-12 border-none"
+                                }`}
+                                // The negative margin on the icon pulls it out of the border area, exactly like iOS
+                                style={{ marginLeft: 0, paddingLeft: "1rem" }}
+                            >
+                                <div className="flex items-center gap-4 w-full">
+                                    {/* Icon */}
+                                    {item.type === "folder" ? (
+                                        <FolderIcon
+                                            size={28}
+                                            className="text-blue-500 fill-blue-500"
+                                        />
+                                    ) : (
+                                        <FileCode2
+                                            size={28}
+                                            className="text-white"
+                                            strokeWidth={1.5}
+                                        />
+                                    )}
+
+                                    {/* Text Area */}
+                                    <div
+                                        className={`flex flex-col flex-1 py-1 ${index !== currentItems.length - 1 ? "border-b border-gray-800" : ""}`}
+                                    >
+                                        <span className="text-[17px] font-normal tracking-wide text-white">
+                                            {item.name}
+                                        </span>
+                                        {item.subtitle && (
+                                            <span className="text-[13px] text-gray-400 mt-0.5">
+                                                {item.subtitle}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Chevron for Folders */}
+                                {item.type === "folder" && (
+                                    <ChevronRight
+                                        size={20}
+                                        className="text-gray-500 ml-2"
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-gray-500 text-center mt-10 text-[17px]">
+                        No items found.
+                    </p>
+                )}
             </div>
         </div>
     );

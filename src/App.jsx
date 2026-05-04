@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Gateway from "./pages/Gateway";
+import StaticPortfolio from "./pages/StaticPortfolio";
+import BootScreenComp from "./components/BootScreen/BootScreenComp";
+import MobileBootScreen from "./components/BootScreen/MobileBootScreen";
+import LoginScreen from "./pages/LoginScreen";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+    const [view, setView] = useState("gateway");
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const navigate = useNavigate();
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // Update screen type on resize
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    switch (view) {
+        case "static":
+            return <StaticPortfolio onBack={() => setView("gateway")} />;
+        case "booting":
+            // Redirect based on device type
+            return isMobile ? (
+                <MobileBootScreen onBootComplete={() => navigate("/desktop")} />
+            ) : (
+                <BootScreenComp onBootComplete={() => setView("login")} />
+            );
+        case "login":
+            // LoginScreen handles both but can be adjusted for isMobile
+            return <LoginScreen isMobile={isMobile} />;
+        default:
+            return (
+                <Gateway
+                    onChoose={(choice) =>
+                        setView(choice === "static" ? "static" : "booting")
+                    }
+                />
+            );
+    }
 }
-
-export default App

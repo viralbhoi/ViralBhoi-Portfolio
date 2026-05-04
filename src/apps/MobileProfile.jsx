@@ -7,11 +7,17 @@ import {
     Linkedin,
     Github,
     Twitter,
+    Trophy,
 } from "lucide-react";
 import profileImage from "../assets/profile.jpeg";
 
 function MobileProfile() {
     const profiles = [
+        {
+            name: "ICPC Profile",
+            url: "https://icpc.global/ICPCID/G24TUUDMPJG6",
+            icon: <Trophy />,
+        },
         {
             name: "CodeForces",
             url: "https://codeforces.com/profile/viralbhoi",
