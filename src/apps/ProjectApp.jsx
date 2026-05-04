@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { folderData } from "../data/projectsData";
 
+
 function ProjectApp() {
     const [activeTab, setActiveTab] = useState("Fullstack");
     const [searchQuery, setSearchQuery] = useState("");
