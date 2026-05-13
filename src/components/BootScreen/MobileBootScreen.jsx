@@ -6,6 +6,7 @@ import image from "../../assets/mobile_bg.jpeg";
 function MobileBootScreen({ onBootComplete }) {
     const [time, setTime] = useState("");
     const [date, setDate] = useState("");
+    
 
     useEffect(() => {
         const updateClock = () => {

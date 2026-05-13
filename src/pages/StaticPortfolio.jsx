@@ -23,6 +23,10 @@ import {
 import profileImage from "../assets/profile.jpeg";
 
 const StaticPortfolio = ({ onBack }) => {
+    // --- Resume Link ---
+
+    const RESUME_LINK =
+        "https://drive.google.com/file/d/1KX9zQ8GlEuxEbsw5h8Tfz5kvadxJqtyk/view?usp=sharing";
     // --- Theme State ---
     const [theme, setTheme] = useState("dark");
     const isDark = theme === "dark";
@@ -243,7 +247,7 @@ const StaticPortfolio = ({ onBack }) => {
                         <div className="pt-4">
                             {/* Insert your Google Drive Link Here in the href */}
                             <a
-                                href="https://drive.google.com/file/d/1Q4l7KbBuhNUv8P2o5jkLj-yK8LTsANdL/view?usp=sharing"
+                                href={RESUME_LINK}
                                 target="_blank"
                                 rel="noreferrer"
                                 style={{

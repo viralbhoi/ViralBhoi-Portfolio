@@ -29,6 +29,9 @@ import { useAppContext } from "../context/AppContext";
 import MobileDesktop from "../components/Desktop/MobileDesktop";
 
 function DesktopScreen() {
+
+    const RESUME_LINK =
+        "https://drive.google.com/file/d/1KX9zQ8GlEuxEbsw5h8Tfz5kvadxJqtyk/view?usp=sharing";
     const [openApps, setOpenApps] = useState([]);
 
     const { zIdx, setZIdx, setZIdxMap, bringToFront, setIsMinimized } =
@@ -130,7 +133,7 @@ function DesktopScreen() {
                         label="Resume"
                         onClick={() => {
                             window.open(
-                                "https://drive.google.com/file/d/1Q4l7KbBuhNUv8P2o5jkLj-yK8LTsANdL/view?usp=sharing",
+                                RESUME_LINK,
                                 "_blank",
                                 "noopener,noreferrer",
                             );

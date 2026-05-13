@@ -41,6 +41,8 @@ const apps = [
 ];
 
 function MobileDesktop() {
+    const RESUME_LINK =
+        "https://drive.google.com/file/d/1KX9zQ8GlEuxEbsw5h8Tfz5kvadxJqtyk/view?usp=sharing";
     const [activeApp, setActiveApp] = useState(null);
 
     const handleAppClick = (appName) => {
@@ -84,10 +86,7 @@ function MobileDesktop() {
                             className="flex flex-col items-center gap-2 cursor-pointer active:scale-90 transition-transform duration-200"
                             onClick={() =>
                                 name === "Resume"
-                                    ? window.open(
-                                          "https://drive.google.com/file/d/1Q4l7KbBuhNUv8P2o5jkLj-yK8LTsANdL/view?usp=sharing",
-                                          "_blank",
-                                      )
+                                    ? window.open(RESUME_LINK, "_blank")
                                     : handleAppClick(name)
                             }
                         >
